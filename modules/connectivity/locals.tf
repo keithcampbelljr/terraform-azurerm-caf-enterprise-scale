@@ -969,7 +969,7 @@ locals {
           [
             {
               name                 = local.azfw_pip_name[location]
-              public_ip_address_id = local.azfw_pip_resource_id[location]
+              public_ip_address_id = length(local.custom_settings.azurerm_firewall["connectivity"][location].management_ip_configuration) > 0 ? null : local.azfw_pip_resource_id[location]
               subnet_id            = "${local.virtual_network_resource_id[location]}/subnets/AzureFirewallSubnet"
             }
           ]

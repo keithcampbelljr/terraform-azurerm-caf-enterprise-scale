@@ -274,7 +274,8 @@ resource "azurerm_firewall" "virtual_wan" {
     content {
       # Mandatory attributes
       name                 = ip_configuration.value["name"]
-      public_ip_address_id = ip_configuration.value["public_ip_address_id"]
+      # Conditional if management_ip_configuration exists
+      public_ip_address_id = each.value.template.management_ip_configuration != null ? ip_configuration.value["public_ip_address_id"] : null
       # Optional attributes
       subnet_id = try(ip_configuration.value["subnet_id"], null)
     }
